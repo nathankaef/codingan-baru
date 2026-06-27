@@ -21,7 +21,6 @@ func bacaTeks() string {
 	return teks
 }
 
-// bagian a: tambah, ubah, hapus data mahasiswa
 func tambahMahasiswa() {
 	fmt.Println("--- Tambah Data Mahasiswa ---")
 
@@ -101,7 +100,6 @@ func hapusMahasiswa() {
 	fmt.Println("Data berhasil dihapus.")
 }
 
-// bagian b: catat kehadiran
 func catatKehadiran() {
 	fmt.Println("--- Catat Kehadiran ---")
 	fmt.Print("NIM: ")
@@ -145,7 +143,6 @@ func catatKehadiran() {
 	fmt.Println("Kehadiran dicatat.")
 }
 
-// bagian c: pencarian (sequential & binary search)
 func menuCari() {
 	fmt.Println("--- Menu Pencarian ---")
 	fmt.Println("1. Cari berdasarkan Status (Sequential Search)")
@@ -163,9 +160,6 @@ func menuCari() {
 	}
 }
 
-// Sequential Search: dicek satu-satu dari awal sampai akhir,
-// cocok untuk status karena banyak mahasiswa bisa punya status
-// yang sama dan datanya tidak terurut berdasarkan status.
 func cariSequentialStatus() {
 	fmt.Println("1. Hadir  2. Izin  3. Sakit  4. Alpa")
 	fmt.Print("Cari status: ")
@@ -188,9 +182,10 @@ func cariSequentialStatus() {
 
 	ditemukan := false
 	for i := 0; i < len(dataMahasiswa); i++ {
-		if dataMahasiswa[i].StatusTerakhir == statusDicari {
+		if dataMahasiswa[i].StatusTerakhir == statusDicari && dataMahasiswa[i].Kelas == "05-02" {
 			tampilkanSatu(dataMahasiswa[i])
 			ditemukan = true
+
 		}
 	}
 
@@ -199,9 +194,6 @@ func cariSequentialStatus() {
 	}
 }
 
-// Binary Search: butuh data yang sudah terurut berdasarkan NIM,
-// makanya bikin salinan dulu dan diurutkan sebelum dicari,
-// supaya data aslinya tidak ikut berubah urutan.
 func cariBinaryNIM() {
 	if len(dataMahasiswa) == 0 {
 		fmt.Println("Data masih kosong.")
@@ -250,7 +242,6 @@ func urutkanInsertionNIM(data []Mahasiswa) {
 	}
 }
 
-// bagian d: pengurutan (selection & insertion sort)
 func menuUrut() {
 	fmt.Println("1. Urutkan Total Hadir (Selection Sort)")
 	fmt.Println("2. Urutkan Nama (Insertion Sort)")
@@ -267,8 +258,6 @@ func menuUrut() {
 	}
 }
 
-// Selection Sort: tiap putaran cari nilai Hadir terbesar
-// di sisa data, lalu ditukar ke posisi depan.
 func urutSelectionHadir() {
 	n := len(dataMahasiswa)
 	for i := 0; i < n-1; i++ {
@@ -285,8 +274,6 @@ func urutSelectionHadir() {
 	tampilkanSemua()
 }
 
-// Insertion Sort: ambil satu data, sisipkan ke posisi yang
-// tepat di antara data yang sudah terurut sebelumnya.
 func urutInsertionNama() {
 	for i := 1; i < len(dataMahasiswa); i++ {
 		kunci := dataMahasiswa[i]
@@ -302,7 +289,6 @@ func urutInsertionNama() {
 	tampilkanSemua()
 }
 
-// bagian e: statistik kehadiran
 func menuStatistik() {
 	fmt.Println("1. Persentase Kehadiran per Kelas")
 	fmt.Println("2. Daftar Alpa Terbanyak")
@@ -345,7 +331,7 @@ func statistikKelas() {
 		totalPertemuan := 0
 
 		for i := 0; i < len(dataMahasiswa); i++ {
-			if dataMahasiswa[i].Kelas == namaKelas {
+			if (dataMahasiswa[i].Kelas == namaKelas) && dataMahasiswa[i].NIM == "123" {
 				totalHadir += dataMahasiswa[i].Hadir
 				totalPertemuan += dataMahasiswa[i].Hadir + dataMahasiswa[i].Izin + dataMahasiswa[i].Sakit + dataMahasiswa[i].Alpa
 			}
@@ -409,6 +395,16 @@ func tampilkanSatu(m Mahasiswa) {
 }
 
 func main() {
+	dataMahasiswa = []Mahasiswa{
+		{"1", "Ahmad", "IF-44-01", 14, 1, 1, 0, "Hadir"},
+		{"2", "Siti", "IF-44-01", 16, 0, 0, 0, "Hadir"},
+		{"3", "Budi", "IF-44-02", 12, 2, 0, 2, "Alpa"},
+		{"4", "Citra", "IF-44-02", 15, 0, 1, 0, "Sakit"},
+		{"5", "Dedi", "IF-44-01", 13, 1, 2, 0, "Izin"},
+		{"6", "Eka", "IF-44-03", 16, 0, 0, 0, "Hadir"},
+		{"7", "Fahmi", "IF-44-03", 11, 1, 1, 3, "Alpa"},
+	}
+
 	for {
 		fmt.Println()
 		fmt.Println("=== SiPresensi ===")
